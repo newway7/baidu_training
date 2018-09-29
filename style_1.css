@@ -1,0 +1,20 @@
+<style>
+*{
+    box-sizing:border-box;
+}
+h1{float:left;
+width:18%;
+background-color: deepskyblue;
+color:white;
+text-align:center;
+padding-top: 40px;
+height:650px;
+font-size: 40px;
+margin-top:0px;
+margin-left: 2.5em;
+}
+h2{font-size: 25px;}
+#content{float:left;
+margin-left: 2em;}
+</style>
+
