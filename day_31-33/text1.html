@@ -1,0 +1,15 @@
+<html>
+    <body>
+        
+            <input type="checkbox" class='all'>
+        <script>
+        var all=document.getElementsByTagName('input');
+        console.log(all);
+        all[0].onclick=function(ev){
+            var ev = ev || window.event;
+            var target = ev.target || ev.srcElement;
+            console.log(target.value);
+        }
+        </script>
+    </body>
+</html>

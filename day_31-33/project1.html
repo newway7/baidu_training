@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="ife31data.js"></script>
+</head>
+
+<body>
+    <select id="selectRegion">
+        <option value="华北">华北地区</option>
+        <option value="华东">华东地区</option>
+        <option value="华南">华南地区</option>
+    </select>
+    <table id='table'></table>
+    <script>
+        document.getElementById('selectRegion').addEventListener('click', main);
+
+        function main() {
+            console.log(getValue());
+            newTable(getValue());
+        }
+
+        function getValue() {
+            var selectedValue = document.getElementById('selectRegion').value;
+            var newData = [];
+
+            for (let i = 0; i < sourceData.length; i++) {
+                // sourceData[i].region
+                console.log(sourceData[i].region);
+                console.log(selectedValue);
+                if (sourceData[i].region == selectedValue) {
+                    newData.push(sourceData[i]);
+                }
+            }
+            return newData;
+            // console.log(newData);
+        }
+
+        function newTable(x) {
+            let tab = document.getElementById('table');
+
+
+
+            tab.innerHTML =
+                `
+
+        <tr><th>地区</th></tr>
+        <tr><th>商品</th></tr>
+        <tr><th>1月</th></tr>
+        <tr><th>2月</th></tr>
+        <tr><th>3月</th></tr>
+        <tr><th>4月</th></tr>
+        <tr><th>5月</th></tr>
+        <tr><th>6月</th></tr>
+        <tr><th>7月</th></tr>
+        <tr><th>8月</th></tr>
+        <tr><th>9月</th></tr>
+        <tr><th>10月</th></tr>
+        <tr><th>11月</th></tr>
+        <tr><th>12月</th></tr>
+        `
+            var tr = tab.getElementsByTagName('tr');
+            //console.log(tr);
+            //console.log(x);
+            for (let i = 0; i < x.length; i++) {
+                let td0 = document.createElement('td');
+                td0.textContent = x[i].region;
+                let td1 = document.createElement('td');
+                td1.textContent = x[i].product;
+                tr[0].append(td0);
+                tr[1].append(td1);
+                for (let j = 2; j < tr.length; j++) {
+                    let td = document.createElement('td');
+                    td.textContent = x[i].sale[j - 2];
+                    tr[j].appendChild(td);
+                }
+
+            }
+
+            // document.body.appendChild(tab);
+        }
+    </script>
+</body>
+
+</html>

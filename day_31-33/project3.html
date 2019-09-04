@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="ife31data.js"></script>
+</head>
+
+<body>
+    <div id='form'>
+        <div id='product'>
+            <input type="checkbox" class='all'>全选
+            <input type="checkbox" name='productName' id="phone" value='手机'>手机
+            <input type="checkbox" name='productName' id="computer" value='电脑'>电脑
+            <input type="checkbox" name='productName' id="voiceBox" value='智能音箱'>智能音箱
+        </div>
+        <br>
+        <br>
+        <br>
+        <div id='region'>
+            <input type="checkbox" class='all'>全选
+            <input type="checkbox" name='regionName' id="southChina" value='华南'>华南地区
+            <input type="checkbox" name='regionName' id="northChina" value='华北'>华北地区
+            <input type="checkbox" name='regionName' id="eastChina" value='华东'>华东地区
+        </div>
+    </div>
+    <table id='table'></table>
+    <script>
+        document.getElementById('product').addEventListener('click', allChecked);
+        document.getElementById('region').addEventListener('click', allChecked);
+        document.getElementById('product').addEventListener('click', main);
+        document.getElementById('region').addEventListener('click', main);
+        //var txt = '';
+
+        function allChecked(ev) {
+            var ev = ev || window.event;
+            var target = ev.target || ev.srcElement;
+            var checkboxAll = target.parentNode.querySelector('.all');
+            var ocheckbox = target.parentNode.querySelectorAll('input');
+            var num = 0;
+
+            if (target == checkboxAll) {
+                if (target.checked == true) {
+                    for (let i = 1; i < ocheckbox.length; i++) {
+                        ocheckbox[i].checked = true;
+
+                        //a.push(ocheckbox[i].value); //oCheckbox[i].getAttribute("value")一样的效果
+                    }
+                    // console.log(a);
+
+                }
+
+
+            } else {
+                for (let i = 1; i < ocheckbox.length; i++) {
+                    if (ocheckbox[i].checked == true) {
+                        num++;
+                        // a.push(ocheckbox[i].value);
+                    }
+
+                }
+                if (num == 3) {
+                    checkboxAll.checked = true;
+                }
+                if (num < 1) {
+                    target.checked = true;
+                }
+                if (target.checked == false) {
+
+                    checkboxAll.checked = false;
+
+                }
+            }
+
+
+        }
+
+        function main() {
+            newTable(getValue());
+        }
+
+        function getValue() {
+            var txt = '';
+            aInput = document.getElementsByTagName('input');
+            console.log(aInput[0].value);
+            for (let i = 0; i < aInput.length; i++) {
+                if (aInput[i].checked) {
+                    //console.log(aInput[i].value);
+                    txt += aInput[i].value;
+                }
+            }
+            console.log(txt);
+            var newData = [];
+            for (let i = 0; i < sourceData.length; i++) {
+                if (txt.indexOf(sourceData[i].region) != -1 && txt.indexOf(sourceData[i].product != -1)) {
+                    newData.push(sourceData[i]);
+                }
+            }
+            return newData;
+        }
+
+        function newTable(x) {
+            let tab = document.getElementById('table');
+
+
+
+            tab.innerHTML =
+                `
+
+        <tr><th>地区</th></tr>
+        <tr><th>商品</th></tr>
+        <tr><th>1月</th></tr>
+        <tr><th>2月</th></tr>
+        <tr><th>3月</th></tr>
+        <tr><th>4月</th></tr>
+        <tr><th>5月</th></tr>
+        <tr><th>6月</th></tr>
+        <tr><th>7月</th></tr>
+        <tr><th>8月</th></tr>
+        <tr><th>9月</th></tr>
+        <tr><th>10月</th></tr>
+        <tr><th>11月</th></tr>
+        <tr><th>12月</th></tr>
+        `
+            var tr = tab.getElementsByTagName('tr');
+            //console.log(tr);
+            //console.log(x);
+            for (let i = 0; i < x.length; i++) {
+                let td0 = document.createElement('td');
+                td0.textContent = x[i].region;
+                let td1 = document.createElement('td');
+                td1.textContent = x[i].product;
+                tr[0].append(td0);
+                tr[1].append(td1);
+                for (let j = 2; j < tr.length; j++) {
+                    let td = document.createElement('td');
+                    td.textContent = x[i].sale[j - 2];
+                    tr[j].appendChild(td);
+                }
+
+            }
+
+            // document.body.appendChild(tab);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+    <TITLE> New Document </TITLE>
+    <meta charset="UTF-8" />
+
+</HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+    function autoRowSpan(tb, row, col) {
+        var lastValue = "";
+        var value = "";
+        var pos = 1;
+        for (var i = row; i < tb.rows.length; i++) {
+            value = tb.rows[i].cells[col].innerText;
+            if (lastValue == value) {
+                tb.rows[i].deleteCell(col);
+                tb.rows[i - pos].cells[col].rowSpan = tb.rows[i - pos].cells[col].rowSpan + 1;
+                pos++;
+            } else {
+                lastValue = value;
+                pos = 1;
+            }
+        }
+        console.log(tb.rows.length);
+    }
+
+    function autoColSpan(startRow) {
+        table = document.getElementById('table');
+        var lastValue = '';
+        var value = '';
+        var pos = 1;
+        for (var i = startRow; i < table.rows[0].cells.length; i++) {
+            value = table.rows[0].cells[i].innerText;
+            if (lastValue == value) {
+                table.rows[0].cells[i].style.display = 'none';
+                table.rows[0].cells[i - pos].colSpan = table.rows[0].cells[i - pos].colSpan + 1;
+                pos++;
+            } else {
+                lastValue = value;
+                pos = 1;
+            }
+        }
+
+
+    }
+
+    function autoColSpan() {
+        table = document.getElementById('table');
+        var lastValue = '';
+        var startRow=0;
+
+        while (startRow < table.rows[0].cells.length) {
+            var value = table.rows[0].cells[startRow].innerText;
+            console.log(value);
+            console.log(lastValue);
+            if (lastValue == value) {
+                table.rows[0].deleteCell(startRow);
+                table.rows[0].cells[startRow - 1].colSpan += 1;
+            } else {
+                startRow++;
+                lastValue = value;
+            }
+        }
+    }
+</SCRIPT>
+
+<BODY onload="autoRowSpan(tb,0,0)">
+    <TABLE id="tb" border="1">
+        <THEAD>
+            <TR>
+                <TD>国家</TD>
+                <TD>国家</TD>
+                <TD>国家</TD>
+            </TR>
+        </THEAD>
+        <TR>
+            <TD>中国</TD>
+            <TD>中国</TD>
+            <TD>中国</TD>
+        </TR>
+        <TR>
+            <TD>中国</TD>
+            <TD>四川</TD>
+            <TD>中国</TD>
+        </TR>
+        <TR>
+            <TD>中国</TD>
+            <TD>北京</TD>
+            <TD>中国</TD>
+        </TR>
+        <TR>
+            <TD>美国</TD>
+            <TD>纽约</TD>
+            <TD>中国</TD>
+        </TR>
+        <TR>
+            <TD>美国</TD>
+            <TD>洛杉矶</TD>
+            <TD>中国</TD>
+        </TR>
+        <TR>
+            <TD>英国</TD>
+            <TD>伦敦</TD>
+            <TD>中国</TD>
+        </TR>
+    </TABLE>
+</BODY>
+
+</HTML>
