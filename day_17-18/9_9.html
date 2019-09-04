@@ -1,0 +1,25 @@
+<html>
+    <head>
+    <style>
+    table,tr, td{border:5px solid red;
+    border-collapse: collapse;
+
+    }
+    </style>
+    </head>
+    <body>
+        <p id='table'></p>
+        <script>
+            var table='<table>'
+        for (var i=1;i < 10;i++){
+            table+='<tr>'
+            for (var j=1;j<i+1;j++){
+            table+=`<td>${i}*${j}=${i*j}</td>`
+            }
+            table+='</tr>'
+        }    
+         table+='</table>'
+         document.getElementById('table').innerHTML=table;
+        </script>
+    </body>
+</html>
