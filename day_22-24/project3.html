@@ -2,8 +2,6 @@
 
 <html lang="en">
 
-
-
 <head>
 
     <meta charset="UTF-8">
@@ -16,130 +14,191 @@
 
 </head>
 
-
-
 <body>
 
     <script>
+        var tree = {
 
-        /*
+            "id": 0,
 
-                实现一个字符串头尾去除空格的函数
+            "name": "root",
 
-                注意需要去除的空格，包括全角、半角空格
+            "left": {
 
-                暂时不需要学习和使用正则表达式的方式
+                "id": 1,
 
-                */
+                "name": "Simon",
 
-        function diyTrim(str) {
+                "left": {
 
-            var result = "",
+                    "id": 3,
 
-                start = 0;
+                    "name": "Carl",
 
-                end = str.length-1;
+                    "left": {
 
+                        "id": 7,
 
+                        "name": "Lee",
 
-            for(var i = 0; i < str.length; i++)
+                        "left": {
 
-            {
+                            "id": 11,
 
-                if(start <= end && (str[start] == " " || str[start] == "　"))
+                            "name": "Fate"
 
-                {
+                        }
 
-                    start++;
+                    },
+
+                    "right": {
+
+                        "id": 8,
+
+                        "name": "Annie",
+
+                        "left": {
+
+                            "id": 12,
+
+                            "name": "Saber"
+
+                        }
+
+                    }
+
+                },
+
+                "right": {
+
+                    "id": 4,
+
+                    "name": "Tony",
+
+                    "left": {
+
+                        "id": 9,
+
+                        "name": "Candy"
+
+                    }
 
                 }
 
-                if(start <= end && (str[end] == " " || str[end] == "　"))
+            },
 
-                {
+            "right": {
 
-                    end--;
+                "id": 2,
+
+                "name": "right",
+
+                "left": {
+
+                    "id": 5,
+
+                    "name": "Carl2",
+
+                },
+
+                "right": {
+
+                    "id": 6,
+
+                    "name": "Carl3",
+
+                    "right": {
+
+                        "id": 10,
+
+                        "name": "Kai"
+
+                    }
 
                 }
 
             }
 
-            result = str.slice(start,end+1);    //取start到end+1间的字符串，取出的字符串即str[start]到str[end]
-
-            return result
-
         }
 
 
 
-        // 测试用例
+        // 假设id和name均不会重复，根据输入name找到对应的id
 
-        console.log(diyTrim(' a f b    ')); // ->a f b
-
-        console.log(diyTrim('    ffdaf    ')); // ->ffdaf
-
-        console.log(diyTrim('1    ')); // ->1
-
-        console.log(diyTrim('　　f')); // ->f
-
-        console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
-
-        console.log(diyTrim(' ')); // ->
-
-        console.log(diyTrim('　')); // ->
-
-        console.log(diyTrim('')); // ->
-
-
-
-        /*
-
-        去掉字符串str中，连续重复的地方
-
-        */
-
-        function removeRepetition(str) {
-
-            var result = "";
-
-
-
-            for (var i = 0; i < str.length; i++) {
-
-                if(str[i] != str[i+1])
-
-                {
-
-                    result += str[i];
-
+        function findIdByName(nameValue, node) {
+            if (node) {
+                if (node.name === nameValue) {
+                    console.log(node.id);
+                    return;
+                    
+                } else {
+                    findIdByName(nameValue, node.left);
+                    findIdByName(nameValue, node.right);
                 }
-
             }
-
-
-
-            return result;
-
         }
+        findIdByName('Carl2', tree);
 
 
 
-        // 测试用例
 
-        console.log(removeRepetition("aaa")); // ->a
+        // 假设id和name均不会重复，根据输入id找到对应的name
 
-        console.log(removeRepetition("abbba")); // ->aba
+        function findNameById(idValue, node) {
+            if (node) {
+                if (node.id === idValue) {
+                    console.log(node.name);
+                    return;
+                    
+                } else {
+                    findNameById(idValue, node.left);
+                    findNameById(idValue, node.right);
+                }
+            }
+        }
+        findNameById(5, tree);
 
-        console.log(removeRepetition("aabbaabb")); // ->abab
 
-        console.log(removeRepetition("")); // ->
+        // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+        var backsD = [];
 
-        console.log(removeRepetition("abc")); // ->abc
+        function getListWithDLR(node) {
 
+            if (node) {
+                backsD.push(node.name);
+                getListWithDLR(node.left);
+                getListWithDLR(node.right);
+            }
+        }
+        getListWithDLR(tree);
+        console.log('backsD:' + backsD.join());
+
+        // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+        var backsL = [];
+
+        function getListWithLDR(node) {
+            if (node) {
+                getListWithLDR(node.left);
+                backsL.push(node.name);
+                getListWithLDR(node.right);
+            }
+        }
+        getListWithLDR(tree);
+        console.log('backsL:' + backsL.join());
+        // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+        var backsR = [];
+
+        function getListWithLRD(node) {
+            if (node) {
+                getListWithLRD(node.left);
+                getListWithLRD(node.right);
+                backsR.push(node.name);
+            }
+        }
+        getListWithLRD(tree);
+        console.log('backsR:' + backsR.join());
     </script>
 
 </body>
-
-
 
 </html>
