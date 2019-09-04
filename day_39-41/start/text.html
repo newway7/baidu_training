@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text" charset="utf-8" />
+</head>
+
+<body>
+    <canvas id="one" height="1000" width="1000"></canvas>
+    <script>
+        var c = document.getElementById("one");
+        var ctx = c.getContext("2d");
+        ctx.strokeStyle = "black";
+        ctx.beginPath();
+        ctx.fillStyle = "lightgreen";
+        ctx.arc(100, 100, 50, 0, Math.PI * 2, false);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+        ctx.font = "40px Arial";
+        ctx.textBaseline = "middle"; //基准线在中间
+        ctx.textAlign = "center"; //基准线在中间
+        ctx.fillText("He", 100, 100);
+        ctx.strokeText("He", 100, 100);
+        var c = document.getElementById("one");
+        var ctx = c.getContext("2d");
+        var arrHe = [];
+        var arrNe = [];
+        var numHe = 100;
+        var numNe = 5;
+
+        //随机点
+        for (var i = 0; i < numHe; i++) {
+            arrHe.push({
+                x: rnd(c.width, 50),
+                y: rnd(c.height, 50),
+                speedX: rndSign() * rnd(1, 0),
+                speedY: rndSign() * rnd(1, 0)
+            });
+        }
+
+        setInterval(
+            function () {
+                ctx.clearRect(0, 0, c.width, c.height);
+                //He绘画
+                arrHe.forEach(
+                    function (dot) {
+                        var {
+                            x,
+                            y,
+                            speedX,
+                            speedY
+                        } = dot;
+                        ctx.beginPath();
+                        ctx.fillStyle = "lightgreen";
+                        ctx.arc(dot.x, dot.y, 50, 0, Math.PI * 2, false);
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.fillStyle = "white";
+                        ctx.font = "40px Arial";
+                        ctx.textBaseline = "middle";
+                        ctx.textAlign = "center";
+                        ctx.fillText("He", dot.x, dot.y);
+
+                        if (dot.x < 0 || dot.x > c.width) {
+                            speedX *= -1;
+                        }
+                        if (dot.y < 0 || dot.y > c.height) {
+                            speedY *= -1;
+                        }
+                        dot.x += speedX;
+                        dot.y += speedY;
+
+
+                    });
+            }, 16);
+
+        //生成随机点位置和随机方向
+        function rnd(m, n) {
+            return Math.random() * (m - n);
+        }
+
+        function rndSign() {
+            return Math.random() > 0.5 ? 1 : -1;
+        }
+    </script>
+</body>
+
+</html>

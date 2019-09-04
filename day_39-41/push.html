@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hash</title>
+</head>
+<body>
+    <button id="a">A</button>
+    <button id="b">B</button>
+    <button id="c">C</button>
+    <div id="cont"></div>
+    <script>
+        window.onload=function(){
+            var a=document.getElementById('a');
+            var b=document.getElementById('b');
+            var c=document.getElementById('c');
+            var cont=document.getElementById('cont');
+            a.addEventListener('click',function(){
+                window.location.hash='#a';
+            },false);
+
+            b.addEventListener('click',function(){
+                window.location.hash='#b';
+            },false);
+
+            c.addEventListener('click',function(){
+                window.location.hash='#c';
+            },false);
+
+            function handleHash(){
+                var hash=window.location.hash;
+                return hash.length>0?hash.substr(1):''
+
+            }
+
+            function render(){
+                var text=handleHash();
+                if(text==''){
+                    window.location.hash='#a';
+                    return;
+                }
+                cont.innerHTML=text;
+
+            }
+
+            window.onhashchange = render;
+            // window.onhashchange = 渲染函数；锚链接发生改变触发onhashchange事件；
+
+            render();//进来先执行一次渲染函数() 改变喵连接
+
+            // function 解析Hash，获取状态参数() {
+            //     取到需要的值，并返回
+            // }
+
+            // function 渲染函数() {
+            //     内容 = 解析Hash，获取状态参数()
+            //     cont的innerHTML = 内容
+            // }
+
+            // 按钮点击事件 = function() {
+            //     设置新的hash
+            // }
+
+        }
+    </script>
+</body>
+</html>
