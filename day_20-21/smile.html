@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <style>
+        #play {
+            width: 500px;
+            height: 480px;
+            background-image: url(1.jpg);
+            border: 1px solid black;
+            margin: auto;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='play'></div>
+    <button id='button' onclick="startBtn()">开始播放</button>
+    <script>
+        var y = 0;
+        var play = document.getElementById('play');
+
+        function bgPosition() {
+
+
+            if (y <= -7680) {
+                y = 0;
+            }
+            y += -480;
+            play.style.backgroundPosition = '0px ' + y + 'px';
+
+
+
+        }
+
+
+        function startBtn() {
+
+            var a=setInterval(bgPosition, 50);
+            a;
+
+        }
+    </script>
+</body>
+
+</html>
