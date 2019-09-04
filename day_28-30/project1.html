@@ -1,0 +1,59 @@
+<!DOCtype html>
+
+<head>
+    <style>
+        *{padding:0;margin:0}
+        #email-sug-wrapper{
+        list-style-type:none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        document.getElementById('email-input').addEventListener('keyup', main);
+
+        function main() {
+            var aInput = document.getElementById("email-input").value;
+            document.getElementById('email-sug-wrapper').innerHTML = '';
+            if (myTrim(aInput) != '') {
+                addLi(myTrim(aInput));
+                onGet();
+            }
+            
+
+        }
+
+        function myTrim(x) {
+            return x.replace(/^\s+|\s+$/g, '');
+        }
+
+        function addLi(x) {
+            for (let i = 0; i < postfixList.length; i++) {
+                var aLi = document.createElement('li');
+                aLi.textContent = x + '@' + postfixList[i];
+                document.getElementById('email-sug-wrapper').appendChild(aLi);
+            }
+        }
+
+        function onGet() {
+            var oUl = document.getElementById('email-sug-wrapper');
+            oUl.onclick = function (ev) {
+                var ev = ev || window.event;
+                var target = ev.target || ev.srcElement;
+                if (target.nodeName.toLowerCase() == 'li') { 
+                    //alert(target.innerHTML);
+                    document.getElementById("email-input").value=target.innerHTML;
+                }
+
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCtype html>
+
+<head>
+    <style>
+        *{
+            padding:0;margin:0
+        }
+        #email-sug-wrapper{
+            list-style-type:none;
+        }
+        li:hover{ 
+            background-color:yellow;
+        }
+        ul{
+            width:173px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        document.getElementById('email-input').addEventListener('keyup', main);
+        var ali = document.getElementsByTagName('li');
+
+        function main() {  
+            var aInput = document.getElementById("email-input").value;
+            document.getElementById('email-sug-wrapper').innerHTML = '';
+            var trim = myTrim(aInput);
+            //console.log(myTrim(aInput).slice(0,myTrim(aInput).indexOf('@')))
+            if (trim != '') {
+
+                addLi(htmlEncodeByRegExp(trim));
+                onGet();
+                document.addEventListener('keyup', keyEvent);
+            }
+
+
+        }
+
+        function myTrim(x) {
+            var m = x.replace(/^\s+|\s+$/g, '');
+            return m;
+        }
+
+        function htmlEncodeByRegExp(str) {
+            var s = "";
+            if (str.length == 0) return "";
+            s = str.replace(/&/g, "&");
+            s = s.replace(/</g, "<");
+            s = s.replace(/>/g, ">");
+            s = s.replace(/ /g, " ");
+            s = s.replace(/\'/g, "'");
+            s = s.replace(/\"/g, '"');
+            return s;
+        };
+
+        function htmlDecode(text) {
+            //1.首先动态创建一个容器标签元素，如DIV
+            var temp = document.createElement("div");
+            //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+            temp.innerHTML = text;
+            //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        };
+
+        function addLi(x) {
+            var xBefore;
+            var xAfter;
+            var postfixListNew = [];
+            if (x.indexOf('@') != -1) {
+                xBefore = x.slice(0, x.indexOf('@'));
+                //console.log(xBefore);
+                xAfter = x.slice(x.indexOf('@') + 1);
+                //console.log(xAfter);
+                for (let i = 0; i < postfixList.length; i++) {
+                    if (postfixList[i].indexOf(xAfter) == 0) {
+                        postfixListNew.push(postfixList[i]);
+                    }
+                }
+                //console.log(postfixListNew);
+                if (postfixListNew.length != 0) {
+                    for (let i = 0; i < postfixListNew.length; i++) {
+                        var aLi = document.createElement('li');
+                        aLi.textContent = xBefore + '@' + postfixListNew[i];
+                        document.getElementById('email-sug-wrapper').appendChild(aLi);
+                    }
+                } else {
+                    for (let i = 0; i < postfixList.length; i++) {
+                        var aLi = document.createElement('li');
+                        aLi.textContent = xBefore + '@' + postfixList[i];
+                        document.getElementById('email-sug-wrapper').appendChild(aLi);
+                    }
+
+                }
+
+            } else {
+                for (let i = 0; i < postfixList.length; i++) {
+                    var aLi = document.createElement('li');
+                    aLi.textContent = x + '@' + postfixList[i];
+                    document.getElementById('email-sug-wrapper').appendChild(aLi);
+                }
+            }
+        }
+        var index = -1;
+
+        function keyEvent(e) {
+            var e = e || window.event;
+            if (e.keyCode == 40) { //向下键，index+1；
+                index++;
+                if (index >= ali.length) {
+                    index = 0;
+                }
+                console.log(index);
+                //先清空背景色
+                clearBGC();
+                //根据index,设置背景色
+                ali[index].style.background = "#ccc";
+
+            } else if (e.keyCode == 38) { //向上键
+                index--;
+                if (index < 0) {
+                    index = ali.length - 1;
+                }
+                console.log(index);
+                //先清空背景色
+                clearBGC();
+                //根据index,设置背景色
+                ali[index].style.background = "#ccc";
+
+            } else if (e.keyCode == 13 && index != -1) {
+                //var aInput2 = document.getElementById("email-input").value;
+                console.log(ali[index].innerHTML);
+                document.getElementById("email-input").value=ali[index].innerHTML;
+
+
+            }
+        }
+
+        function clearBGC() {
+            for (let i = 0; i < ali.length; i++) {
+                ali[i].style.backgroundColor = '#fff';
+            }
+
+        }
+
+
+        function onGet() {
+            var oUl = document.getElementById('email-sug-wrapper');
+            oUl.onclick = function (ev) {
+                var ev = ev || window.event;
+                var target = ev.target || ev.srcElement;
+                var aInput = document.getElementById("email-input").value;
+                if (target.nodeName.toLowerCase() == 'li') {
+                    //alert(target.innerHTML);
+                    document.getElementById("email-input").value = target.innerHTML;
+
+                   // aInput=target.innerHTML;
+                    oUl.innerHTML = '';
+                }
+
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCtype html>
+
+<head>
+    <style>
+        *{
+            padding:0;margin:0
+        }
+        #email-sug-wrapper{
+            list-style-type:none;
+        }
+        li:hover{ 
+            background-color:yellow;
+        }
+        ul{
+            width:173px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        document.getElementById('email-input').addEventListener('keyup', main);
+
+        function main() {
+            var aInput = document.getElementById("email-input").value;
+            document.getElementById('email-sug-wrapper').innerHTML = '';
+            //console.log(myTrim(aInput).slice(0,myTrim(aInput).indexOf('@')))
+            if (myTrim(aInput) != '') {
+                addLi(myTrim(aInput));
+                onGet();
+            }
+
+
+        }
+
+        function myTrim(x) {
+            var m = x.replace(/^\s+|\s+$/g, '');
+            return m;
+        }
+
+        function addLi(x) {
+            var xBefore;
+            var xAfter;
+            var postfixListNew = [];
+            if (x.indexOf('@') != -1) {
+                xBefore = x.slice(0, x.indexOf('@'));
+                //console.log(xBefore);
+                xAfter = x.slice(x.indexOf('@') + 1);
+                //console.log(xAfter);
+                for (let i = 0; i < postfixList.length; i++) {
+                    if (postfixList[i].indexOf(xAfter) == 0) {
+                        postfixListNew.push(postfixList[i]);
+                    }
+                }
+                //console.log(postfixListNew);
+                if (postfixListNew.length != 0) {
+                    for (let i = 0; i < postfixListNew.length; i++) {
+                        var aLi = document.createElement('li');
+                        aLi.textContent = xBefore + '@' + postfixListNew[i];
+                        document.getElementById('email-sug-wrapper').appendChild(aLi);
+                    }
+                } else {
+                    for (let i = 0; i < postfixList.length; i++) {
+                        var aLi = document.createElement('li');
+                        aLi.textContent = xBefore + '@' + postfixList[i];
+                        document.getElementById('email-sug-wrapper').appendChild(aLi);
+                    }
+
+                }
+
+            } else {
+                for (let i = 0; i < postfixList.length; i++) {
+                    var aLi = document.createElement('li');
+                    aLi.textContent = x + '@' + postfixList[i];
+                    document.getElementById('email-sug-wrapper').appendChild(aLi);
+                }
+            }
+        }
+
+        // function addLi(x) {
+        //     for (let i = 0; i < postfixList.length; i++) {
+        //         var aLi = document.createElement('li');
+        //         aLi.textContent = x + '@' + postfixList[i];
+        //         document.getElementById('email-sug-wrapper').appendChild(aLi);
+        //     }
+        // }
+
+        function onGet() {
+            var oUl = document.getElementById('email-sug-wrapper');
+            oUl.onclick = function (ev) {
+                var ev = ev || window.event;
+                var target = ev.target || ev.srcElement;
+                if (target.nodeName.toLowerCase() == 'li') {
+                    //alert(target.innerHTML);
+                    document.getElementById("email-input").value = target.innerHTML;
+                    oUl.innerHTML = '';
+                }
+
+            }
+        }
+    </script>
+</body>
+
+</html>
