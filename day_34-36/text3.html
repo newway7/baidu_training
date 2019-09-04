@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<head>
+    <script src='C:\Users\123\Desktop\angular\ibaidu\day_31-33\ife31data.js'></script>
+</head>
+
+<body>
+
+    <script>
+        if (window.localStorage) {
+            if (!localStorage.getItem("sourceData")) {
+                let temp = JSON.stringify(sourceData);
+                localStorage.setItem("sourceData", temp);
+            }
+            sourceData = JSON.parse(localStorage.getItem("sourceData"));
+            console.log(sourceData);
+        }
+
+    </script>
+
+</body>
+
+</html>

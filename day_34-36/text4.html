@@ -1,0 +1,110 @@
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>监听localStorage变化（同页面）</title>
+
+</head>
+
+<body>
+
+<button class="add">add</button>
+
+<button class="del">del</button>
+
+<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+
+        crossorigin="anonymous"></script>
+
+<script>
+
+    var orignalSetItem = localStorage.setItem;
+
+    localStorage.setItem = function(key,newValue){
+
+        var setItemEvent = new Event("setItemEvent");
+
+        setItemEvent.key = key;
+
+        window.dispatchEvent(setItemEvent);
+
+        orignalSetItem.apply(this,arguments);
+
+    };
+
+    window.addEventListener("setItemEvent", function (e) {
+
+        if(e.key=='demo'){
+
+            alert('key值为demo，添加成功');
+
+        }
+
+    });
+
+    $('.add').click(function () {
+
+        localStorage.setItem("demo","123");
+
+    })
+
+ 
+
+ 
+
+ 
+
+    var orignalremoveItem = localStorage.removeItem;
+
+    localStorage.removeItem = function(key,newValue){
+
+        var removeItemEvent = new Event("removeItemEvent");
+
+        removeItemEvent.key = key;
+
+        window.dispatchEvent(removeItemEvent);
+
+        orignalremoveItem.apply(this,arguments);
+
+    };
+
+    window.addEventListener("removeItemEvent", function (e) {
+
+        if(localStorage.getItem("demo")){
+
+            if(e.key=='demo'){
+
+                alert("key值为demo，删除成功");
+
+            }
+
+        }else{
+
+            alert("本地数据无key值为demo")
+
+        }
+
+    });
+
+    $(".del").click(function () {
+
+        localStorage.removeItem('demo')
+
+    })
+
+</script>
+
+</body>
+
+</html>
