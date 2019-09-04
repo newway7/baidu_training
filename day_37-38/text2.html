@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script>
+        window.onload = function () {
+            console.log("body的childNodes");
+            var oItems = document.body.childNodes;
+           console.log(oItems.length);
+            for (var i = 0; i < oItems.length; i++) {
+                console.log("nodeType:" + oItems[i].nodeType);
+                console.log("nodeName:" + oItems[i].nodeName);
+                console.log("nodeValue:'" + oItems[i].nodeValue + "'");
+            }
+            console.log("nodeValue:'" + oItems[1].innerText + "'");
+        };
+
+
+    </script>
+</head>
+<body>
+
+<p>123</p>
+111
+</body>
+</html>

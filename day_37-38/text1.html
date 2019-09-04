@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        body {
+            margin: 100px;
+            padding: 100px;
+        }
+
+        #parent {
+            height: 130px;
+            width: 200px;
+            border: 1px solid saddlebrown;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='parent'>123</div>
+    <script>
+        var reg = /^[1-9]\d*$|^0$/;
+        var div = document.getElementById('parent');
+        var oldValue = div.innerText;
+        div.addEventListener('click', (e) => {
+            if (e.target.id === 'parent') {
+
+                let input = document.createElement('input');
+                input.value = oldValue;
+                input.id = 'edit';
+                let okBtn = document.createElement('button');
+                okBtn.id = 'ok'
+                okBtn.appendChild(document.createTextNode('完成'));
+
+                let onBtn = document.createElement('button');
+                onBtn.id = 'on'
+                onBtn.appendChild(document.createTextNode('取消'));
+                div.innerHTML = '';
+                div.appendChild(input);
+                div.appendChild(okBtn);
+                div.appendChild(onBtn);
+                document.getElementById('ok').addEventListener('click', function () {
+                    var newValue = document.getElementById('edit').value;
+
+                    if (newValue && reg.test(newValue) == true) {
+                        div.innerHTML = newValue;
+                    } else {
+                        alert('无效的输入');
+                        div.innerHTML = oldValue;
+                    }
+                })
+                document.getElementById('on').addEventListener('click', function () {
+                    div.innerHTML = oldValue;
+
+                })
+                document.addEventListener('keydown', (e) => {
+                    if (document.getElementById('edit')) {
+                        if (e.keyCode == '13' && reg.test(document.getElementById('edit').value) ==
+                            true) {
+                            div.innerHTML = document.getElementById('edit').value
+                        } else if (e.keyCode == '27') {
+                            div.innerHTML = oldValue;
+                        }
+                    }
+                })
+
+            }
+        })
+    </script>
+</body>
+
+</html>
