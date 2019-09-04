@@ -1,0 +1,75 @@
+<html>
+
+<head>
+ 
+</head>
+
+<body>
+    <p id="t1">324234234</p>
+    <p id="t2">adsasdasd</p>
+    <script>
+            function clock() {
+                var time = new Date();
+                var hour = time.getHours();
+                var thu = time.getDay();
+                var minute = time.getMinutes();
+                var month = time.getMonth() + 1;
+                var second = time.getSeconds();
+                var year = time.getFullYear();
+                var day=time.getDate();
+                second = checkTime(second);
+                minute = checkTime(minute);
+                hour = checkTime(hour);
+                month=checkTime(month);
+                day=checkTime(day);
+
+                document.getElementById('t1').innerHTML = fullTime1(year,month,day,thu,hour,minute,second);
+                document.getElementById('t2').innerHTML = fullTime2(year,month,day,thu,hour,minute,second);
+                t = setTimeout(clock, 500);
+    
+            }
+            var weekday = new Array(7);
+            weekday[0] = "星期日";
+            weekday[1] = "星期一";
+            weekday[2] = "星期二";
+            weekday[3] = "星期三";
+            weekday[4] = "星期四";
+            weekday[5] = "星期五";
+            weekday[6] = "星期六";
+    
+            var weekday2=new Array(7);
+            weekday2[1]='Monday';
+            weekday2[2]='Tuseday';
+            weekday2[3]='Wednesday';
+            weekday2[4]='Thursday';
+            weekday2[5]='Friday';
+            weekday2[6]='Saturday';
+            weekday2[0]='Sunday';           
+
+            function checkTime(t) {
+                if (t < 10) {
+                    t = '0' + t;
+                    
+                }
+                return t;
+            }
+            function fullTime1(year,month,day,thu,hour,minute,second){
+                return year + '年' + month + '月' +day+ '日 '+ weekday[thu]+ ' ' + hour + ':' + minute +
+                    ':' + second;
+            }
+            function fullTime2(year,month,day,thu,hour,minute,second){
+                if(hour<=12){
+                    return year + '-' + month + '-' +day+ ' '+ weekday2[thu]+ ' ' + hour + ':' + minute +
+                    ':' + second+' AM';
+                }
+                else{
+                    return year + '-' + month + '-' +day+ ' '+ weekday2[thu]+ ' ' + (hour-12) + ':' + minute +
+                    ':' + second+' PM';
+                }
+
+            }
+            clock();
+        </script>
+</body>
+
+</html>

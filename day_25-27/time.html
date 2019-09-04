@@ -1,0 +1,370 @@
+<!DOCtype html>
+
+<body>
+    <select id="year-select" onchange="isLeapYear()">
+
+        <option value="2000">2000</option>
+
+        <option value="2001">2001</option>
+
+        <option value="2002">2002</option>
+
+        <option value="2010">2010</option>
+
+        <option value="2011">2011</option>
+
+        <option value="2012">2012</option>
+
+        <option value="2018">2018</option>
+
+        <option value="2019">2019</option>
+
+        <option value="2020">2020</option>
+
+    </select>
+
+
+
+    <select id="month-select" onchange="isLeapYear()">
+
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+    </select>
+
+
+
+    <select id="day-select">
+
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+        <option value="13">13</option>
+
+        <option value="14">14</option>
+
+        <option value="15">15</option>
+
+        <option value="16">16</option>
+
+        <option value="17">17</option>
+
+        <option value="18">18</option>
+
+        <option value="19">19</option>
+
+        <option value="20">20</option>
+
+        <option value="21">21</option>
+
+        <option value="22">22</option>
+
+        <option value="23">23</option>
+
+        <option value="24">24</option>
+
+        <option value="25">25</option>
+
+        <option value="26">26</option>
+
+        <option value="27">27</option>
+
+        <option value="28">28</option>
+
+        <option value="29">29</option>
+
+        <option value="30">30</option>
+
+    </select>
+
+
+
+    <select id="hour-select">
+
+        <option value="0">0</option>
+
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+    </select>
+
+
+
+    <select id="minute-select">
+
+        <option value="0">0</option>
+
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+    </select>
+
+
+
+    <select id="second-select">
+
+        <option value="0">0</option>
+
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+    </select>
+
+
+
+    <p id="result-wrapper"></p>
+    <script>
+        var weekday = new Array(7);
+        weekday[0] = "星期日";
+        weekday[1] = "星期一";
+        weekday[2] = "星期二";
+        weekday[3] = "星期三";
+        weekday[4] = "星期四";
+        weekday[5] = "星期五";
+        weekday[6] = "星期六";
+        var day = document.getElementById('day-select');
+        var month = document.getElementById('month-select');
+        var year = document.getElementById('year-select');
+        var dayList = day.getElementsByTagName('option');
+        var p29 = document.createElement('option');
+        p29.value = '29';
+        p29.text = '29';
+        var p30 = document.createElement('option');
+        p30.text = '30';
+        p30.value = '30'
+        var p31 = document.createElement('option');
+        p31.value = '31';
+        p31.text = '31';
+        var minute = document.getElementById('minute-select');
+        var hour = document.getElementById('hour-select');
+        var second = document.getElementById('second-select');
+
+
+        function clear() {
+            var dayList = day.getElementsByTagName('option');
+            if (dayList.length == 28) {
+                day.appendChild(p29);
+                day.appendChild(p30);
+
+            }
+            if (dayList.length == 29) {
+                day.appendChild(p30);
+            }
+            if (dayList.length == 30) {
+                return;
+            }
+            if (dayList.length == 31) {
+                day.removeChild(dayList[dayList.length - 1])
+            }
+
+        }
+
+        function isLeapYear() {
+            var dayList = day.getElementsByTagName('option');
+            if (month.value == '2') {
+                if ((year.value % 4 == 0) && (year.value % 100 != 0) || (year.value % 400 == 0)) {
+                    day.removeChild(dayList[dayList.length - 1]);
+                } else {
+                    day.removeChild(dayList[dayList.length - 1]);
+                    day.removeChild(dayList[dayList.length - 1]);
+                }
+            }
+        }
+
+        function changeMonth() {
+            console.log(typeof (month));
+            //var month = document.getElementById('month-select');
+            //var month = month.value;
+            console.log(typeof (month));
+            var monthV = month.value;
+            console.log(typeof (monthV));
+            if (monthV == '1' || monthV == '3' || monthV == '5' || monthV == '7' || monthV == '8' || monthV == '10' ||
+                monthV == '12') {
+                day.appendChild(p31);
+            } else if (monthV == '4' || monthV == '6' || monthV == '9' || monthV == '11') {
+                return;
+            }
+        }
+
+        function main() {
+            clear();
+            isLeapYear();
+            changeMonth();
+        }
+
+        function setTime() {
+            var secondTime = second.value;
+            //console.log(typeof(secondTime));
+            var minuteTime = minute.value;
+            var hourTime = hour.value;
+            var monthTime = month.value;
+            var dayTime = day.value;
+
+            secondTime = check(secondTime);
+            minuteTime = check(minuteTime);
+            hourTime = check(hourTime);
+            dayTime = check(dayTime);
+            monthTime = check(monthTime);
+            //console.log(secondTime);
+            //console.log(typeof(secondTime));
+            return year.value + '-' + monthTime + '-' + dayTime +' '+ hourTime + ':' + minuteTime + ':' + secondTime;
+        }
+        function setTimeFormat() {
+            var set = setTime();
+            var year = new Date(set).getFullYear();
+            var month= new Date(set).getMonth()+1;
+            var day= new Date(set).getDate();
+            var hour= new Date(set).getHours();
+            var minute= new Date(set).getMinutes();
+            var second= new Date(set).getSeconds();
+            var week= new Date(set).getDay();
+            return year + '年' + month + '月' +day+ '日 '+ weekday[week]+ ' ' + hour + ':' + minute +
+                    ':' + second;
+        }
+        result=document.getElementById('result-wrapper');
+
+
+
+
+        function interval(){
+            var setT=new Date(setTime());
+            var nowT=new Date();
+            var formatNow=nowT.getTime();
+            var formatSet=setT.getTime();
+            var intervalDay=Math.floor(Math.abs(formatNow-formatSet)/(60*60*24*1000));
+            var intervalHour=Math.floor((Math.abs(formatNow-formatSet)%(60*60*24*1000))/(60*60*1000));
+            var intervalMinute=Math.floor(Math.abs(formatNow-formatSet)%(60*60*1000)/(60*1000));
+            var intervalSecond=Math.floor(Math.abs(formatNow-formatSet)/1000)%60;
+            var setTimeF=setTimeFormat();
+            
+            result.innerHTML='现在距离'+setTimeF+' 已经过去'+intervalDay+'天'+intervalHour+'时'+intervalMinute+'分'+intervalSecond+'秒';
+
+        }
+
+
+        var select = document.getElementsByTagName('select');
+        for (let i = 0; i < select.length; i++) {
+            select[i].addEventListener('change', main);
+           select[i].addEventListener('change', interval);
+        }
+
+
+
+ 
+
+        function check(t) {
+            if (t < 10) {
+                t = '0' + t;
+            }
+            return t;
+
+        }
+    </script>
+</body>
+
+</html>
